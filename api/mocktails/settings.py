@@ -1,0 +1,2 @@
+DEBUG = False
+IMPORT_DATA = False

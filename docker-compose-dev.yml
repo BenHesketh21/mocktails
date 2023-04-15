@@ -1,0 +1,16 @@
+version: '3'
+services:
+  api:
+    image: mocktails-api
+    build:
+      context: ./api
+    environment:
+      - FLASK_DEBUG=True
+      - FLASK_REDIS_URL="redis://redis:6379"
+      - FLASK_RULE_CONFIG_FILE="/app/config/import.json"
+      - FLASK_IMPORT_DATA=False
+    
+    volumes:
+      - type: bind
+        source: ./api
+        target: /app/

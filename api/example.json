@@ -1,0 +1,15 @@
+[
+    {
+        "request": {
+        "endpoint": "/some/endpoint",
+        "methods": ["GET"],
+        "body": {} 
+        },
+        "response": {
+            "status_code": 200,
+            "body": {
+                "msg": "hello"
+            }
+        }
+    }
+]

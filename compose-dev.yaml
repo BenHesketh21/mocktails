@@ -1,1 +1,14 @@
-services: {}
+services:
+  api:
+    image: mocktails-api
+    build:
+      context: ./api
+    environment:
+      - FLASK_DEBUG=True
+      - FLASK_REDIS_URL="redis://redis:6379"
+      - FLASK_RULE_CONFIG_FILE="/app/config/import.json"
+      - FLASK_IMPORT_DATA=False
+    ports:
+      - 5000:5000
+  redis:
+    image: redis:latest

@@ -1,15 +1,14 @@
 import os
-import json
 from logging.config import dictConfig
 
 from flask import Flask
 
-from mocktails.rules import rules, create_rules
-from mocktails.mocks import mocks
-from mocktails.rules_config import import_data
+from mocktails.rules.views import rules
+from mocktails.mocks.views import mocks
+from mocktails.rules.utils import import_data
 
 
-def create_app(test_config=None):
+def create_app(test_config=None): 
     # create and configure the app
     
     dictConfig({
@@ -31,7 +30,7 @@ def create_app(test_config=None):
             "IMPORT_DATA": True
         })
 
-    # ensure the instance folder exists
+    # ensure the instance folder exists 
     try:
         os.makedirs(app.instance_path)
     except OSError:

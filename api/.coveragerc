@@ -1,0 +1,5 @@
+[run]
+omit = mocktails/db.py,mocktails/**/views.py,mocktails/settings.py
+
+[report]
+show_missing = true

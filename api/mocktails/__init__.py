@@ -5,6 +5,7 @@ from flask import Flask
 
 from mocktails.rules.views import rules
 from mocktails.mocks.views import mocks
+from mocktails.ui.views import ui
 from mocktails.rules.utils import import_data
 
 
@@ -35,9 +36,14 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    app.template_folder = './ui/templates'
+    app.static_folder = './ui/static'
+    app.static_url_path = '/static'
     
     app.register_blueprint(rules)
     app.register_blueprint(mocks)
+    app.register_blueprint(ui)
 
     if app.config["IMPORT_DATA"] == True:
         app.logger.debug("Importing Data")

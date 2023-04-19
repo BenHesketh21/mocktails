@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat|Roboto+Mono");
+body {
+  background: #263238;
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  overflow: scroll;
+}
+@media screen and (max-height: 375px) {
+  body {
+    position: relative;
+    overflow: scroll;
+  }
+}
+
+.cardRequest {
+  width: 80%;
+}
+@media screen and (max-width: 1200px) {
+  .cardRequest {
+    width: 50%;
+  }
+}
+
+.cardResponse {
+  width: 80%;
+}
+@media screen and (max-width: 1200px) {
+  .cardResponse {
+    width: 50%;
+  }
+}
+
+#editorWrapper {
+  position: relative;
+  height: 100%;
+  min-height: 45vh;
+}
+@media (min-height: 600px) {
+  #editorWrapper {
+    height: 55vh;
+  }
+}
+@media (min-height: 900px) {
+  #editorWrapper {
+    height: 65vh;
+  }
+}
+#editorWrapper #editorResponse {
+  font-family: "Roboto Mono", monospace;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#editorWrapper #editorRequest {
+  font-family: "Roboto Mono", monospace;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.btn {
+  color: rgba(0, 0, 0, 0.9);
+  font-family: "Russo One", sans-serif;
+  font-size: 1.2em;
+  font-weight: 200;
+  letter-spacing: 0.15em;
+  line-height: 2.5;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0 1em;
+  position: relative;
+  width: 100%;
+  margin-bottom: 1em;
+  background-color: #FFA71A;
+}
+.btn:hover {
+  background-color: #cd7e00;
+}
+
+img {
+  position: relative;
+  width: 325px;
+  height: 250px;
+  border-radius: 8px;
+}

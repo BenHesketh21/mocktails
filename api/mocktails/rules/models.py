@@ -24,15 +24,15 @@ class Rule():
     def __init__(self, init_json_data: dict = None, rule_id: str = None, db=None) -> None:
         if init_json_data == None:
             if rule_id == None or db == None:
-                raise "You must set init_json or (the rule_id with the db context)"
+                raise BaseException("You must set init_json or (the rule_id with the db context)")
             self.id = rule_id
             rule = self.get_rule_by_id(db)
             if type(rule) != dict:
-                raise f"{rule}"
+                raise BaseException(f"{rule}")
             self.json_data = rule
-            self.rule_request: MockRequest = MockRequest(data=self.json_data["request"])
-            self.rule_response: MockResponse = MockResponse(data=self.json_data["response"])
-            self.uniqueRequestBody : bool = self.json_data["uniqueRequestBody"]
+            self.rule_request: MockRequest = MockRequest(data=self.json_data[self.id]["request"])
+            self.rule_response: MockResponse = MockResponse(data=self.json_data[self.id]["response"])
+            self.uniqueRequestBody : bool = self.json_data[self.id]["uniqueRequestBody"]
         else:
             self.init_json_data = init_json_data
             self.rule_request: MockRequest = MockRequest(data=init_json_data["request"])
@@ -60,7 +60,7 @@ class Rule():
         exists, msg = self.rule_exists(db)
         if exists:
             rule = db.hget("rules", self.id)
-            return json.loads(rule)
+            return {self.id: json.loads(rule)}
         return f"Rule {self.id} Doesn't exist"
 
 

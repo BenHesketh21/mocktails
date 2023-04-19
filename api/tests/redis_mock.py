@@ -20,6 +20,10 @@ class FakeRedisClient():
         return cursor, self.hashes[name]
 
     def hget(self, name, key):
+        if name not in self.hashes:
+            return None
+        if key not in self.hashes[name]:
+            return None
         return self.hashes[name][key]
 
     def hdel(self, name, key):

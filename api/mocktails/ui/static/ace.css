@@ -19,8 +19,13 @@ body {
   }
 }
 
+form {
+  width: 100%;
+}
+
 .cardRequest {
-  width: 80%;
+  width: 50%;
+  float: left;
 }
 @media screen and (max-width: 1200px) {
   .cardRequest {
@@ -29,7 +34,9 @@ body {
 }
 
 .cardResponse {
-  width: 80%;
+  width: 50%;
+  float: right
+  ;
 }
 @media screen and (max-width: 1200px) {
   .cardResponse {

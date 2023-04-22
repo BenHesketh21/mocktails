@@ -10,14 +10,22 @@
     <title>Document</title>
 </head>
 <body>
+  {% if message %}
+  {% if message[0] %}
+    <h1>Created</h1>
+  {% elif message[0] == False %}
+    <h1>Failed to Create New Rule</h1>
+  {% endif %}
+  {% endif %}
+  <form action="" method="post">
     <div class="cardRequest">
         <div class="card-body">
           <h1>Request</h1>
           <p class="lead">Paste a JSON string into the text box and use the buttons to minify or pretty-print the text</p>
           <div class="form-group">
-            <form action="http://httpbin.org/post" method="post">
-            <input type="text" id placeholder="Endpoint" />
-            <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select" name="test">
+            <form action="" method="post">
+            <input type="text" id placeholder="Endpoint" name="endpoint" />
+            <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select" name="methods">
                 <option value=""></option>
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>
@@ -25,17 +33,16 @@
                 <option value="DELETE">DELETE</option>
             </select>
             <label for="uniqueRequestBody">Unique Body?</label>
-            <input id="uniqueRequestBody" type="checkbox"/>
+            <input id="uniqueRequestBody" type="checkbox" name="uniqueRequestBody" checked />
+            <input name="requestBody" type="hidden" />
             <div id="editorWrapper">
-              <div id="editorRequest">Request</div>
+              <div id="editorRequest">{"request": "body"}</div>
             </div>
-            </form>
           </div>
           <div class="row">
             <div class="col-md-6"><a class="btn" id="minifyRequest">Minify</a></div>
             <div class="col-md-6"><a class="btn" id="beautifyRequest">Beautify</a></div>
           </div>
-        </div>
         </div>
       </div>
       <div class="cardResponse">
@@ -43,10 +50,11 @@
           <h1>Response</h1>
           <p class="lead">Paste a JSON string into the text box and use the buttons to minify or pretty-print the text</p>
           <div class="form-group">
+            <input name="responseBody" type="hidden" />
             <div id="editorWrapper">
-                <div id="editorResponse">Response</div>
+                <div id="editorResponse">{"response": "body"}</div>
             </div>
-            <input id="responseStatusCode" type="number" value="200" max="599" min="200" />
+            <input id="responseStatusCode" type="number" value="200" max="599" min="200" name="status_code" />
             <img id="dogImg" src="https://httpstatusdogs.com/img/200.jpg" alt="No Dog for this one :("/>
           </div>
           <div class="row">
@@ -55,7 +63,8 @@
           </div>
         </div>
         </div>
-      </div>
+        <input type="submit" value="Add Rule" />
+      </form>
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.17.0/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -100,6 +109,17 @@
             }
         })
     }
+
+    function updateForm(editor, formName) {
+      $(document).click(function() {
+        $(`input[name="${formName}"]`).val(editor.getValue());
+      })
+    }
+
+    updateForm(editorRequest, 'requestBody')
+    updateForm(editorResponse, 'responseBody')
+
+ 
 
     pasteEvent(editorRequest)
     pasteEvent(editorResponse)

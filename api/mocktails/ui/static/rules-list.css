@@ -1,0 +1,25 @@
+.rule-list-container {
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+.rule-item-container {
+    border: 2px solid;
+    border-color: black;
+}
+
+a.rule-list-item-link {
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+
+.selected-rule-container {
+    width: 50%;
+    display: flex;
+    float: left;
+    top: 5%;
+    z-index: 100;
+    height: 100%;
+}

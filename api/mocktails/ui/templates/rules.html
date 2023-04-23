@@ -5,11 +5,13 @@
 {% block body %}
 <div class="rule-list-container">
 {% for id, rule in rules.items() %}
-{{ id }}
     <a href="{{ url_for('ui.view_rules', selected_rule=id) }}" class="rule-list-item-link">
         <div class="rule-item-container">
+            <div class="rule-item-name">
+                <h2>{{ rule.name }}</h2>
+            </div>
             <div class="rule-item-endpoint">
-                {{ rule.request.endpoint }}
+                <h2>{{ rule.request.endpoint }}</h2>
             </div>
             {% for method in rule.request.methods %}
             <div class="rule-item-method">
@@ -21,31 +23,44 @@
             </div>
         </div>
     </a>
+    <a href="{{ url_for('ui.update_rule', rule_id=id) }}">Update</a>
+    <button onclick="deleteRule('{{ url_for('rules.delete_rule', rule_id=id, _external=True) }}');">Delete</button>
+    <br>
 {% endfor %}
 </div>
 <div class="selected-rule-container">
     {% for id, rule in rules.items() %}
         {% if selected_rule == id %}
-            <div class="rule-item-container">
-                <div class="rule-item-endpoint">
-                    {{ rule.request.endpoint }}
+            <div class="selected-rule-item-container">
+                <div class="selected-rule-item-endpoint">
+                    <h1> Endpoint: {{ rule.request.endpoint }}</h1>
                 </div>
                 {% for method in rule.request.methods %}
-                <div class="rule-item-method">
-                {{ method }}
+                <div class="selected-rule-item-method">
+                <p class="selected-rule-item-method-paragraph">{{ method }}</p>
                 </div>
                 {% endfor %}
-                <div class="rule-item-body request">
+                <div class="selected-rule-item-body request">
                     {{ rule.request.body }}
                 </div>
-                <div class="rule-item-body response">
+                <div class="selected-rule-item-body response">
                     {{ rule.response.body }}
                 </div>
-                <div class="rule-item-status-code">
+                <div class="selected-rule-item-status-code">
                     {{ rule.response.status_code }}
                 </div>
             </div>
         {% endif %}
     {% endfor %}
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+    function deleteRule(url) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("DELETE", url, false);
+        xmlHttp.send();
+        location.reload();
+    }
+</script>
 {% endblock %}

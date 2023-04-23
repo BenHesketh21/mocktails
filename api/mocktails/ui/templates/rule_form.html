@@ -11,19 +11,28 @@
         <div class="rule-container2">
           <h1 class="rule-title">{{ page_title }}</h1>
           <h2 class="rule-text">Request</h1>
+          <input 
+          type="text"
+          placeholder="Name"
+          required
+          class="rule-textinput2 input"
+          name="name"
+          value="{{ pre_populated_rule.name }}"
+          />
           <input
             type="text"
             placeholder="Endpoint"
             required
             class="rule-textinput input"
             name="endpoint"
+            value="{% if pre_populated_rule %}{{ pre_populated_rule.rule_request.endpoint }}{% endif %}"
           />
           <select data-placeholder="Methods" hidden multiple class="chosen-select" name="methods" size="10">
             <option value=""></option>
-            <option value="GET">GET</option>
-            <option value="POST">POST</option>
-            <option value="PATCH">PATCH</option>
-            <option value="DELETE">DELETE</option>
+            <option {% if pre_populated_rule %}{% if 'GET' in pre_populated_rule.rule_request.methods %}selected{% endif %}{% endif %} value="GET">GET</option>
+            <option {% if pre_populated_rule %}{% if 'POST' in pre_populated_rule.rule_request.methods %}selected{% endif %}{% endif %} value="POST">POST</option>
+            <option {% if pre_populated_rule %}{% if 'PATCH' in pre_populated_rule.rule_request.methods %}selected{% endif %}{% endif %} value="PATCH">PATCH</option>
+            <option {% if pre_populated_rule %}{% if 'DELETE' in pre_populated_rule.rule_request.methods %}selected{% endif %}{% endif %} value="DELETE">DELETE</option>
           </select>
           <textarea
             placeholder='&#123; "Request": "body" &#125;'
@@ -32,12 +41,12 @@
             name="requestBody"
           ></textarea>
           <div id="editorWrapper" class="rule-textarea textarea">
-            <div id="editorRequest">{"request": "body"}</div>
+            <div id="editorRequest">{% if pre_populated_rule %}{{ pre_populated_rule.rule_request.body }}{% else %}{"request": "body"}{% endif %}</div>
           </div>
           <button class="rule-button button" id="minifyRequest" type="button">Minify</button>
           <button class="rule-button1 button" id="beautifyRequest" type="button">Beautify</button>
           <span class="rule-text1">Should this body be unique?</span>
-          <input type="checkbox" checked class="rule-checkbox" name="uniqueRequestBody" />
+          <input type="checkbox" {% if pre_populated_rule %}{% if pre_populated_rule.uniqueRequestBody %}checked{% endif %}{% else %}checked{% endif %} class="rule-checkbox" name="uniqueRequestBody" />
           <hr class="rule-hr">
         </div>
         <div class="rule-container3">
@@ -49,7 +58,7 @@
             name="responseBody"
           ></textarea>
           <div id="editorWrapper" class="rule-textarea1 textarea">
-            <div id="editorResponse">{"response": "body"}</div>
+            <div id="editorResponse">{% if pre_populated_rule %}{{ pre_populated_rule.rule_response.body }}{% else %}{"response": "body"}{% endif %}</div>
           </div>
           <button class="rule-button3 button" id="minifyResponse" type="button">Minify</button>
           <button class="rule-button4 button" id="beautifyResponse" type="button">Beautify</button>
@@ -60,7 +69,7 @@
             min="200"
             max="599"
             step="1"
-            value="200"
+            value="{% if pre_populated_rule %}{{ pre_populated_rule.rule_response.status_code }}{% else %}200{% endif %}"
             class="rule-textinput1 input"
             id="responseStatusCode"
             name="statusCode"
@@ -141,8 +150,9 @@
         document.getElementById("dogImg").src = `https://httpstatusdogs.com/img/${code}.jpg`
     }
 
-    document.getElementById("responseStatusCode").addEventListener('input', (evt) => addDogPic(evt.srcElement.value))
-
+    const statusCodeElement = document.getElementById("responseStatusCode")
+    addDogPic(statusCodeElement.value)
+    statusCodeElement.addEventListener('input', (evt) => addDogPic(evt.srcElement.value))
     document.getElementById('minifyRequest').addEventListener('click', () => formatText(editorRequest))
     document.getElementById('beautifyRequest').addEventListener('click', () => formatText(editorRequest, 4))
     document.getElementById('minifyResponse').addEventListener('click', () => formatText(editorResponse))

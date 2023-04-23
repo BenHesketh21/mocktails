@@ -71,7 +71,14 @@
   text-align: center;
 }
 .rule-textinput {
-  top: 140px;
+  top: 160px;
+  left: 35%;
+  right: 35%;
+  margin: auto;
+  position: absolute;
+}
+.rule-textinput2 {
+  top: 120px;
   left: 35%;
   right: 35%;
   margin: auto;

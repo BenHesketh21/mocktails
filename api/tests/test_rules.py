@@ -20,6 +20,7 @@ def client(app):
 
 def new_rule(db):
     rule = Rule(init_json_data={
+        'name': 'Test Rule',
         'uniqueRequestBody': True, 
         'request': {
             'body': {}, 
@@ -38,6 +39,7 @@ def new_rule(db):
 
 def new_non_unique_rule(db):
     rule = Rule(init_json_data={
+        'name': 'Test Rule',
         'uniqueRequestBody': False, 
         'request': {
             'body': {}, 
@@ -66,6 +68,7 @@ def test_add_rule(app):
         db = get_db(a)
         id = 'REVMRVRFL3NvbWUvZW5kcG9pbnQvNnt9'
         expected = {
+            'name': 'Test Rule',
             'uniqueRequestBody': True, 
             'request': {
                 'body': {}, 
@@ -80,6 +83,7 @@ def test_add_rule(app):
             }
         }
         created = create_rules(db, [{
+            'name': 'Test Rule',
             'uniqueRequestBody': True, 
             'request': {
                 'body': {}, 
@@ -122,6 +126,7 @@ def test_update_rule(app):
         db = get_db(a)
         rule1 = new_rule(db)
         updated_rule={
+            'name': 'Test Rule',
             'uniqueRequestBody': True, 
             'request': {
                 'body': {
@@ -166,22 +171,24 @@ def test_generate_request_without_body(app):
     with app.app_context() as a:
         db = get_db(a) 
         rule = Rule(init_json_data={
-                'uniqueRequestBody': True, 
-                'request': {
-                    'endpoint': '/some/endpoint/6', 
-                    'methods': ['DELETE']
+            'name': 'Test Rule',
+            'uniqueRequestBody': True, 
+            'request': {
+                'endpoint': '/some/endpoint/6', 
+                'methods': ['DELETE']
+            }, 
+            'response': {
+                'body': {
+                    'boom': 'I AM DELETING'
                 }, 
-                'response': {
-                    'body': {
-                        'boom': 'I AM DELETING'
-                    }, 
-                    'status_code': 200
-                }
-            })
+                'status_code': 200
+            }
+        })
         
         rule.create_rule(db)
         assert rule.json_data == {
             'REVMRVRFL3NvbWUvZW5kcG9pbnQvNg==': {
+                'name': 'Test Rule',
                 'request': {
                     'endpoint': '/some/endpoint/6', 
                     'methods': ['DELETE']
@@ -200,6 +207,7 @@ def test_delete_when_not_exists(app):
     with app.app_context() as a:
         db = get_db(a)
         rule = Rule(init_json_data={
+                'name': 'Test Rule',
                 'uniqueRequestBody': True, 
                 'request': {
                     'endpoint': '/some/endpoint/6', 
@@ -219,6 +227,7 @@ def test_update_when_not_exists(app):
     with app.app_context() as a:
         db = get_db(a)
         rule = Rule(init_json_data={
+                'name': 'Test Rule',
                 'uniqueRequestBody': True, 
                 'request': {
                     'endpoint': '/some/endpoint/6', 

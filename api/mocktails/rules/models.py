@@ -30,11 +30,14 @@ class Rule():
             if type(rule) != dict:
                 raise BaseException(f"{rule}")
             self.json_data = rule
+            print(rule)
+            self.name = self.json_data[self.id]["name"]
             self.rule_request: MockRequest = MockRequest(data=self.json_data[self.id]["request"])
             self.rule_response: MockResponse = MockResponse(data=self.json_data[self.id]["response"])
             self.uniqueRequestBody : bool = self.json_data[self.id]["uniqueRequestBody"]
         else:
             self.init_json_data = init_json_data
+            self.name = init_json_data["name"]
             self.rule_request: MockRequest = MockRequest(data=init_json_data["request"])
             self.rule_response: MockResponse = MockResponse(data=init_json_data["response"])
             self.uniqueRequestBody: bool = init_json_data["uniqueRequestBody"]
